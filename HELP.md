@@ -1,8 +1,3 @@
-# Read Me First
-The following was discovered as part of building this project:
-
-* The original package name 'com.example.rest-service' is invalid and this project uses 'com.example.restservice' instead.
-
 # Getting Started
 
 ### Reference Documentation
