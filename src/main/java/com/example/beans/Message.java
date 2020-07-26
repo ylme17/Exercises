@@ -1,19 +1,16 @@
 package com.example.beans;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-public @Getter @Setter class Message {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Message {
 	
 	private String msg;
-
-	public Message(String msg) {
-		super();
-		this.msg = msg;
-	}
-
-	public Message() {
-		super();
-	}
 
 }

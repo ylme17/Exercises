@@ -18,10 +18,11 @@ public class MsgService {
 	@GetMapping(value = "/get-msgs/{accountid}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Collection<Message> message(@PathVariable("accountid") int id)
 	{
+		ArrayList<Message> msgs = new ArrayList<>();
+		
 		Message hello = new Message("Hello Yechiel");
 		Message newEmails = new Message("You have new emails");
 		
-		ArrayList<Message> msgs = new ArrayList<>();		
 		msgs.add(hello);
 		msgs.add(newEmails);
 		
