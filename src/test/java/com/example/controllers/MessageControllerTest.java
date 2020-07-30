@@ -32,14 +32,14 @@ class MessageControllerTest {
 	@Test
 	void testCreateAccount() throws Exception {
 		RequestBuilder request = MockMvcRequestBuilders.post("/api/account")
-				.content("{\"name\":\"Avi\"}").contentType(MediaType.APPLICATION_JSON_VALUE);
+				.content("{\"name\":\"David\"}").contentType(MediaType.APPLICATION_JSON_VALUE);
 		MvcResult result = mvc.perform(request).andReturn();
 		assertEquals(200, result.getResponse().getStatus());
 	}
 
 	@Test
 	void testCreateMessage() throws Exception {
-		RequestBuilder request = MockMvcRequestBuilders.post("/api/message/5/chat")
+		RequestBuilder request = MockMvcRequestBuilders.post("/api/message/2/chat")
 				.content("{\"msg\":\"You have new chat message\"}").contentType(MediaType.APPLICATION_JSON_VALUE);
 		MvcResult result = mvc.perform(request).andReturn();
 		assertEquals(200, result.getResponse().getStatus());
@@ -54,7 +54,8 @@ class MessageControllerTest {
 				+"{\"id\":2,\"name\":\"Chaim\"},"
 				+"{\"id\":3,\"name\":\"Yossi\"},"
 				+"{\"id\":4,\"name\":\"Yonatan\"},"
-				+"{\"id\":5,\"name\":\"Avi\"}]"
+				+"{\"id\":5,\"name\":\"Avi\"},"
+				+"{\"id\":6,\"name\":\"David\"}]"
 				,result.getResponse().getContentAsString());
 	}
 

@@ -13,6 +13,6 @@ public interface AccountDAO {
 	
 	public Collection<Message> getMessages(int accountId, String context) throws Exception;
 	
-	public boolean checkIfExist(Account account) throws Exception;
+//	public boolean checkIfExist(Account account) throws Exception;
 
 }

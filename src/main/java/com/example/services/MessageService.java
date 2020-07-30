@@ -16,11 +16,7 @@ public class MessageService {
 	private MessageDAO messageDAO = new MessageDAODB();
 	
 	public void createAccount(Account account) throws Exception {
-		if (accountDAO.checkIfExist(account) == false) {
-			accountDAO.createAccount(account);
-		} else {
-			throw new Exception(account.getName() + " already exist");
-		}
+		accountDAO.createAccount(account);
 	}
 	
 	public Collection<Account> getAllAccounts() throws Exception {

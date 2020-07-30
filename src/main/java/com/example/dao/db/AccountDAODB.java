@@ -70,7 +70,7 @@ public class AccountDAODB implements AccountDAO {
 	@Override
 	public Collection<Message> getMessages(int accountId, String context) throws Exception {
 		Connection con = null;
-		ArrayList<Message> messages = null;
+		Collection<Message> messages = null;
 		try {
 			connectionPool = ConnectionPool.getInstance();
 			con = connectionPool.getConnection();
@@ -80,10 +80,13 @@ public class AccountDAODB implements AccountDAO {
 							+ " AND message.context='" + context + "'";
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(getMessagesSql);
+			
 			while (rs.next()) {
 				Message message = new Message();
 				message.setMsg(rs.getString("message_content"));
 				messages.add(message);
+				if(messages.size() == 10)
+					break;
 			}
 			rs.close();
 			st.close();
@@ -96,26 +99,27 @@ public class AccountDAODB implements AccountDAO {
 		return messages;
 	}
 	
-	public boolean checkIfExist(Account account) throws Exception {
-		Connection con = null;
-		boolean exist = false;
-		try {
-			connectionPool = ConnectionPool.getInstance();
-			con = connectionPool.getConnection();
-			String checkSql = "SELECT * FROM account WHERE account_name='" + account.getName() + "'";
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery(checkSql);
-			if (rs.next()) {
-				exist = true;
-			}
-			rs.close();
-			st.close();
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		} finally {
-			if (con != null)
-				connectionPool.returnConnection(con);
-		}
-		return exist;
-	}
+//	public boolean checkIfExist(Account account) throws Exception {
+//		Connection con = null;
+//		boolean exist = false;
+//		try {
+//			connectionPool = ConnectionPool.getInstance();
+//			con = connectionPool.getConnection();
+//			String checkSql = "SELECT * FROM account WHERE account_name='" + account.getName() + "'";
+//			Statement st = con.createStatement();
+//			ResultSet rs = st.executeQuery(checkSql);
+//			if (rs.next()) {
+//				exist = true;
+//			}
+//			rs.close();
+//			st.close();
+//		} catch (Exception e) {
+//			throw new Exception(e.getMessage());
+//		} finally {
+//			if (con != null)
+//				connectionPool.returnConnection(con);
+//		}
+//		return exist;
+//	}
+	
 }
