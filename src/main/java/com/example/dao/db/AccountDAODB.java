@@ -68,7 +68,7 @@ public class AccountDAODB implements AccountDAO {
 	}
 
 	@Override
-	public Collection<Message> getMessages(int accountId) throws Exception {
+	public Collection<Message> getMessages(int accountId, String context) throws Exception {
 		Connection con = null;
 		ArrayList<Message> messages = null;
 		try {
@@ -76,7 +76,8 @@ public class AccountDAODB implements AccountDAO {
 			con = connectionPool.getConnection();
 			messages = new ArrayList<Message>();
 			String getMessagesSql = "SELECT * FROM message INNER JOIN account_message ON id=account_message.message_id "
-					+ "WHERE account_message.account_id=" + accountId;
+					+ "WHERE account_message.account_id=" + accountId
+							+ " AND message.context='" + context + "'";
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(getMessagesSql);
 			while (rs.next()) {
@@ -87,7 +88,7 @@ public class AccountDAODB implements AccountDAO {
 			rs.close();
 			st.close();
 		} catch (Exception e) {
-			throw new Exception();
+			throw new Exception(e.getMessage());
 		} finally {
 			if (con != null)
 				connectionPool.returnConnection(con);
@@ -110,7 +111,7 @@ public class AccountDAODB implements AccountDAO {
 			rs.close();
 			st.close();
 		} catch (Exception e) {
-			throw new Exception();
+			throw new Exception(e.getMessage());
 		} finally {
 			if (con != null)
 				connectionPool.returnConnection(con);

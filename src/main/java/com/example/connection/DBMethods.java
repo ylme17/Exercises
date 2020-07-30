@@ -8,13 +8,12 @@ import java.sql.Statement;
 public class DBMethods {
 
 	private static final String SERVER_URL = "jdbc:postgresql://localhost:5433/";
-	private static final String DB_URL = "jdbc:postgresql://localhost:5433/exercises";
+	private static final String DB_URL = "jdbc:postgresql://localhost:5433/Exercises";
 	private static final String DRIVER = "org.postgresql.Driver";
 	private static final String USER = "postgres";
 	private static final String PASSWORD = "admin";
 	
-	public static void createDb() throws SQLException, ClassNotFoundException {
-		
+	public static void createDb() throws SQLException, ClassNotFoundException {		
 		Connection con = null;
 		try {
 
@@ -33,8 +32,7 @@ public class DBMethods {
 		}
 	}
 	
-	public static void createTables() {
-		
+	public static void createTables() {		
 		try (Connection con = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
 			Statement stmt = con.createStatement();
 
@@ -54,8 +52,21 @@ public class DBMethods {
 		}
 	}
 	
-	public static void dropAllTables() {
-		
+	public static void addColumn(String table, String name, String type) {
+		try (Connection con = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
+			Statement st = con.createStatement();
+
+			String addColumnSql = "ALTER TABLE " + table + " ADD COLUMN " + name +" " + type + "";
+			st.execute(addColumnSql);
+
+			st.close();
+			System.out.println("column added");
+		} catch (SQLException e) {
+			System.out.println("column not added - " + e.getMessage());
+		}
+	}
+	
+	public static void dropAllTables() {		
 		try (Connection con = DriverManager.getConnection(DB_URL, USER, PASSWORD)) {
 			Statement st = con.createStatement();
 

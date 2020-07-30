@@ -22,10 +22,10 @@ class MessageControllerTest {
 
 	@Test
 	void testGetMessages() throws Exception {
-		RequestBuilder request = MockMvcRequestBuilders.get("/api/get-msgs/2");
+		RequestBuilder request = MockMvcRequestBuilders.get("/api/get-msgs/3/email");
 		MvcResult result = mvc.perform(request).andReturn();
 		assertEquals(200, result.getResponse().getStatus());
-		assertEquals("[{\"msg\":\"You have new emails\"},{\"msg\":\"You have new chat message\"}]",
+		assertEquals("[{\"msg\":\"You have new email\"}]",
 				result.getResponse().getContentAsString());
 	}
 
@@ -39,8 +39,8 @@ class MessageControllerTest {
 
 	@Test
 	void testCreateMessage() throws Exception {
-		RequestBuilder request = MockMvcRequestBuilders.post("/api/message/4")
-				.content("{\"msg\":\"You have new friend request\"}").contentType(MediaType.APPLICATION_JSON_VALUE);
+		RequestBuilder request = MockMvcRequestBuilders.post("/api/message/5/chat")
+				.content("{\"msg\":\"You have new chat message\"}").contentType(MediaType.APPLICATION_JSON_VALUE);
 		MvcResult result = mvc.perform(request).andReturn();
 		assertEquals(200, result.getResponse().getStatus());
 	}

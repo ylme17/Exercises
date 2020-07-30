@@ -29,13 +29,13 @@ public class MessageService {
 		return allAccounts;
 	}
 	
-	public void createMessage(Message messgae, int accountId) throws Exception {
-		int messageId = messageDAO.createMessage(messgae);
+	public void createMessage(Message messgae, int accountId, String context) throws Exception {
+		int messageId = messageDAO.createMessage(messgae, context);
 		messageDAO.connectMessageToAccount(accountId, messageId);
 	}
 	
-	public Collection<Message> getMessages(int accountId) throws Exception {
-		Collection<Message> allMessages = accountDAO.getMessages(accountId);
+	public Collection<Message> getMessages(int accountId, String context) throws Exception {
+		Collection<Message> allMessages = accountDAO.getMessages(accountId, context);
 		return allMessages;
 	}
 

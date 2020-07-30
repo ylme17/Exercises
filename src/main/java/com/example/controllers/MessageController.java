@@ -22,9 +22,10 @@ public class MessageController {
 	
 	private MessageService messageService = new MessageService();
 	
-	@GetMapping(value = "/get-msgs/{accountid}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Collection<Message> getMessages(@PathVariable("accountid") int accountId) throws Exception {
-		Collection<Message> msgs = messageService.getMessages(accountId);
+	@GetMapping(value = "/get-msgs/{accountid}/{context}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Collection<Message> getMessages(@PathVariable("accountid") int accountId, 
+			@PathVariable("context") String context) throws Exception {
+		Collection<Message> msgs = messageService.getMessages(accountId, context);
 		return msgs;
 	}
 	
@@ -33,9 +34,10 @@ public class MessageController {
 		messageService.createAccount(account);
 	}
 	
-	@PostMapping(value = "/message/{accountid}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void createMessage(@RequestBody Message message, @PathVariable("accountid") int accountId) throws Exception {
-		messageService.createMessage(message, accountId);
+	@PostMapping(value = "/message/{accountid}/{context}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public void createMessage(@RequestBody Message message, @PathVariable("accountid") int accountId,
+			@PathVariable("context") String context) throws Exception {
+		messageService.createMessage(message, accountId, context);
 	}
 	
 	@GetMapping(value = "/getaccounts", produces = MediaType.APPLICATION_JSON_VALUE)

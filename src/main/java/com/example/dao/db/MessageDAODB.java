@@ -14,13 +14,15 @@ public class MessageDAODB implements MessageDAO {
 	private ConnectionPool connectionPool;
 
 	@Override
-	public int createMessage(Message message) throws Exception {
+	public int createMessage(Message message, String context) throws Exception {
 		Connection con = null;
 		try {
 			connectionPool = ConnectionPool.getInstance();
 			con = connectionPool.getConnection();
-			String createMessageSql = "INSERT INTO message (message_content) VALUES('" + message.getMsg() + "')";
+			String createMessageSql = "INSERT INTO message (message_content, context) VALUES(?,?)";
 			PreparedStatement pst = con.prepareStatement(createMessageSql, PreparedStatement.RETURN_GENERATED_KEYS);
+			pst.setString(1, message.getMsg());
+			pst.setString(2, context);
 			pst.executeUpdate();
 
 			ResultSet rs = pst.getGeneratedKeys();
@@ -30,7 +32,8 @@ public class MessageDAODB implements MessageDAO {
 			pst.close();
 			return messageId;
 		} catch (Exception e) {
-			throw new Exception("cannot create a new message[title: " + message.getMsg() + "]");
+			throw new Exception("cannot create a new message[msg: " + message.getMsg() + ","
+					+ " context: " + context + "]");
 		} finally {
 			if (con != null)
 				connectionPool.returnConnection(con);
